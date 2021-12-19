@@ -1,5 +1,5 @@
 .body {
-    background-color: #242629;
+    background-color: #232946;
     width: 60%;
     margin: 0 auto;
     font-family: 'Inter', 'Arial', sans-serif;
@@ -9,8 +9,52 @@
     display: flex;
     flex-direction: row;
     justify-content: space-between;
+    margin-top: 50px;
 }
 
 .header__head {
     color: #fffffe;
+    margin-top: 0;
+    margin-bottom: 0;
+    font-weight: 300;
+}
+
+.body__action {
+    display: flex;
+    flex-direction: row;
+    justify-content: space-between;
+    margin-top: 50px;
+}
+
+.textbox__title {
+    color: #fffffe;
+    margin-top: 0;
+    font-size: 53px;
+    font-weight: 600;
+    margin-bottom: 0;
+}
+
+.textbox__paragraph {
+    color: #b8c1ec;
+    font-size: 25px;
+    margin-top: 20px;
+    max-width: 75%;
+}
+
+.textbox__button {
+    width: 300px;
+    height: 105px;
+    background-color: #eebbc3;
+    text-decoration: none;
+    outline: none;
+    border: 0;
+    color: #232946;
+    font-size: 30px;
+    border-radius: 5px;
+    transition: all .2s ease;
+}
+
+.textbox__button:hover {
+    opacity: .6;
+    cursor: pointer;
 }
