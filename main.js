@@ -1,0 +1,1 @@
+(()=>{"use strict";var r={476:(r,t,e)=>{r.exports=e.p+"b9c42c3d39897f658ef5.svg"}},t={};function e(o){var s=t[o];if(void 0!==s)return s.exports;var n=t[o]={exports:{}};return r[o](n,n.exports,e),n.exports}e.p="",(()=>{e(476);var r=[2,3,5].map((function(r){return 2*r}));console.log(r)})()})();
