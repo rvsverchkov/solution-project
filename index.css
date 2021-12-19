@@ -1,0 +1,19 @@
+@import url(./fonts/fonts.css);
+@import url(./blocks/popup.css);
+
+.body {
+    background-color: #242629;
+    width: 60%;
+    margin: 0 auto;
+    font-family: 'Inter', 'Arial', sans-serif;
+}
+
+.body__header {
+    display: flex;
+    flex-direction: row;
+    justify-content: space-between;
+}
+
+.header__head {
+    color: #fffffe;
+}
