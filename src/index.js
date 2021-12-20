@@ -1,9 +1,15 @@
 import './styles/index.css';
-import favicon from '../images/close-icon2.svg';
+import graph from '../images/graph.png';
 
-const images = [
-    { name: 'favicon', image: favicon },
-]
-const numbers = [2, 3, 5];
-const doubledNumbers = numbers.map(number => number * 2);
-console.log(doubledNumbers);
+let graphContainer = document.querySelector('.action__logo');
+let tryButton = document.querySelector('.textbox__button');
+let textBoxArea = document.querySelector('.action__textbox');
+let imageArea = document.querySelector('.action__logo');
+tryButton.addEventListener('click', () => {
+    console.log('hello');
+    textBoxArea.remove();
+    imageArea.remove();
+})
+graphContainer.src = graph;
+
+
