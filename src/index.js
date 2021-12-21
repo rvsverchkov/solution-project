@@ -9,6 +9,8 @@ let solutionContainer = document.querySelectorAll('.action__solution');
 let solutionForm = document.querySelector('.solution__form');
 let solutionFormCriteria = document.querySelector('.solution__subform');
 let buttonBeyond = document.querySelector('.solution__button-beyond');
+let boxForTemplates = document.querySelector('.solution__criterias');
+let templatePhrase = document.getElementById('solution__criteria');
 
 let initialQuestion;
 let solutionVariants;
@@ -45,6 +47,10 @@ solutionFormCriteria.addEventListener('submit', (event) => {
             break;
     }
     solutionCriteria.set(inputCriteria, inputImportance);
+    let currentTemplate = templatePhrase.content.cloneNode(true);
+    let currentPhrase = currentTemplate.querySelector('.criteria__values');
+    currentPhrase.textContent = `${inputCriteria} | Оценка ${inputImportance}`
+    boxForTemplates.append(currentPhrase);
 });
 
 buttonBeyond.addEventListener('click', () => {
