@@ -15,7 +15,7 @@ let solutionVariants;
 let solutionCriteria = new Map();
 
 const matrixOfCriteria = (solutionCriteria) => {
-
+    
 }
 
 solutionForm.addEventListener('submit', (event) => {
