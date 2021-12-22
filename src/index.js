@@ -20,6 +20,7 @@ let initialQuestion;
 let solutionVariants;
 let solutionCriteria = new Map();
 let matrixCriteria;
+let generatedMatrixForEachCriteria = [];
 let solutionValuesCriteria = [];
 
 const matrixOfCriteria = (solutionCriteria, matrixSize) => {
@@ -84,14 +85,22 @@ solutionFormValues.addEventListener('submit', (event) => {
                 });
                 currentArray.push(item.textContent, currentData);
                 solutionValuesCriteria.push(currentArray);
-                console.log(solutionValuesCriteria);
                 return;
             } else {
                 currentArray.push(criterias[i].value);
             }
             counter++;
         };
-    })
+    });
+    for (let i = 0; i < solutionValuesCriteria[0].length - 2; i++) {
+        let newMap = new Map();
+        for (let j = 0; j < solutionValuesCriteria.length; j++) {
+            newMap.set(solutionValuesCriteria[j][solutionValuesCriteria[j].length - 2], Number(solutionValuesCriteria[j][i]));
+        }
+        let generatedMatrix = matrixOfCriteria(newMap, newMap.size);
+        generatedMatrixForEachCriteria.push(generatedMatrix);
+    }
+    console.log(generatedMatrixForEachCriteria);
 })
 
 buttonBeyond.addEventListener('click', () => {
