@@ -197,3 +197,14 @@
 .solution__mod-button {
     margin-top: 20px;
 }
+
+.answers__phrase {
+    margin-left: 20px;
+    background-color: #fffffe;
+    width: 40%;
+    padding-top: 6px;
+    padding-bottom: 6px;
+    font-size: 20px;
+    padding-left: 5px;
+    border-radius: 10px;
+}
