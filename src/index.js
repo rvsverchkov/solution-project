@@ -16,12 +16,44 @@ let templateBox = document.getElementById('solution__choose-box');
 let templateInput = document.getElementById('solution__choose-values');
 
 let initialQuestion;
-//let solutionVariants = ['Lexus', 'Toyota', 'Volvo'];
-let solutionVariants;
+let solutionVariants = ['Lexus', 'Toyota', 'Volvo'];
+//let solutionVariants;
 let solutionCriteria = new Map();
 let matrixCriteria;
+let matrixCriteriaSum;
+let matrixCriteriaChanged;
+let matrixCriteriaTarget;
+let matrixCriteriaTransposed;
+let matrixInitTransposed = [];
+let matrixMultiplyed;
+let arrayOfOtherMatrix = [];
 let generatedMatrixForEachCriteria = [];
 let solutionValuesCriteria = [];
+
+const transposingMatrix = (A) => {
+    var m = A.length, n = A[0].length, AT = [];
+    for (var i = 0; i < n; i++)
+        { AT[ i ] = [];
+            for (var j = 0; j < m; j++) AT[ i ][j] = A[j][ i ];
+        }
+    return AT;
+}
+
+const multiplyMatrix = (A, B) => {
+    var rowsA = A.length, colsA = A[0].length,
+        rowsB = B.length, colsB = B[0].length,
+        C = [];
+    if (colsA != rowsB) return false;
+    for (var i = 0; i < rowsA; i++) C[ i ] = [];
+    for (var k = 0; k < colsB; k++)
+        { for (var i = 0; i < rowsA; i++)
+            { var t = 0;
+            for (var j = 0; j < rowsB; j++) t += A[ i ][j]*B[j][k];
+            C[ i ][k] = t;
+        }
+    }
+    return C;
+}
 
 const matrixOfCriteria = (solutionCriteria, matrixSize) => {
     let currentCriterias = Array.from(solutionCriteria.values());
@@ -34,6 +66,36 @@ const matrixOfCriteria = (solutionCriteria, matrixSize) => {
         }
     }
     return array;
+}
+
+const getSumOfColumn = (matrix) => {
+    let row, col, sum = matrix[0].slice();
+    for( row = 1; row < matrix.length; row++) {
+        for( col = 0; col < sum.length; col++) {
+            sum[col] += matrix[row][col];
+        }
+    }
+    return sum;
+}
+
+const changeMatrixWithDivision = (matrix, sumOfColumns) => {
+    let array = new Array();
+    for (let i = 0; i < matrix.length; i++) {
+        array[i] = new Array();
+        for (let j= 0; j < matrix.length; j++) {
+            array[i][j] = matrix[i][j] / sumOfColumns[j];
+        };
+    };
+    return array;
+}
+
+const sumMatrixRows = (matrix) => {
+    let answer = [];
+    matrix.forEach((item) => {
+        let average = item.reduce((a, b) => a + b, 0) / item.length;
+        answer.push(Math.floor(average * 100) / 100);
+    });
+    return answer;
 }
 
 solutionForm.addEventListener('submit', (event) => {
@@ -99,19 +161,36 @@ solutionFormValues.addEventListener('submit', (event) => {
         }
         let generatedMatrix = matrixOfCriteria(newMap, newMap.size);
         generatedMatrixForEachCriteria.push(generatedMatrix);
-    }
+    };
     console.log(generatedMatrixForEachCriteria);
+    generatedMatrixForEachCriteria.forEach((currentMatrix) => {
+        let currentSum = getSumOfColumn(currentMatrix);
+        let currentChangedMatrix = changeMatrixWithDivision(currentMatrix, currentSum);
+        let currentTarget = sumMatrixRows(currentChangedMatrix);
+        arrayOfOtherMatrix.push(currentTarget);
+    });
+    matrixCriteriaTransposed = transposingMatrix(arrayOfOtherMatrix);
+    matrixInitTransposed.push(matrixCriteriaTarget);
+    matrixMultiplyed = multiplyMatrix(matrixCriteriaTransposed, matrixInitTransposed);
+    console.log(arrayOfOtherMatrix);
+    console.log(matrixCriteriaTransposed);
+    console.log(matrixMultiplyed);
 })
 
 buttonBeyond.addEventListener('click', () => {
     console.log(initialQuestion);
     console.log(solutionVariants);
-    /*solutionCriteria.set('Скорость', 1);
+    solutionCriteria.set('Скорость', 1);
     solutionCriteria.set('Комфорт', 3);
     solutionCriteria.set('Надёжность', 3);
-    solutionCriteria.set('Цена', 2);*/
+    solutionCriteria.set('Цена', 2);
     matrixCriteria = matrixOfCriteria(solutionCriteria, solutionCriteria.size);
+    matrixCriteriaSum = getSumOfColumn(matrixCriteria);
+    matrixCriteriaChanged = changeMatrixWithDivision(matrixCriteria, matrixCriteriaSum);
+    matrixCriteriaTarget = sumMatrixRows(matrixCriteriaChanged);
     console.log(matrixCriteria);
+    console.log(matrixCriteriaChanged);
+    console.log(matrixCriteriaTarget);
     solutionContainer[2].classList.remove('action__solution-hidden');
     solutionContainer[1].classList.add('action__solution-hidden');
     solutionVariants.forEach((currentVariant) => {
