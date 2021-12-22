@@ -1,6 +1,5 @@
 import './styles/index.css';
 import graph from '../images/graph.png';
-import { all } from 'core-js/fn/promise';
 
 let graphContainer = document.querySelector('.action__logo');
 let tryButton = document.querySelector('.textbox__button');
@@ -17,12 +16,15 @@ let templateBox = document.getElementById('solution__choose-box');
 let templateInput = document.getElementById('solution__choose-values');
 
 let initialQuestion;
-let solutionVariants = ['Lexus', 'Toyota', 'Volvo'];
+//let solutionVariants = ['Lexus', 'Toyota', 'Volvo'];
+let solutionVariants;
 let solutionCriteria = new Map();
 let matrixCriteria;
+let solutionValuesCriteria = [];
 
 const matrixOfCriteria = (solutionCriteria, matrixSize) => {
     let currentCriterias = Array.from(solutionCriteria.values());
+    console.log(solutionCriteria);
     let array = new Array();
     for (let i = 0; i < matrixSize; i++) {
         array[i] = new Array();
@@ -67,18 +69,38 @@ solutionFormCriteria.addEventListener('submit', (event) => {
 
 solutionFormValues.addEventListener('submit', (event) => {
     event.preventDefault();
-    let solutionCriteriaQuantity = Array.from(solutionCriteria.keys()).length;
+    let solutionCriterias = Array.from(solutionCriteria.keys()).length;
+    let solutionCriteriasText = Array.from(solutionCriteria.keys()).reverse();
+    let criterias = document.querySelectorAll('.criteria__input');
     let allTitles = solutionFormValues.querySelectorAll('.choose__title');
-    console.log(allTitles);
+    let counter = 0
+    allTitles.forEach((item, index) => {
+        let currentData = new Map();
+        let currentArray = [];
+        for (let i = counter; i <= solutionCriterias * allTitles.length; i++) {
+            if (currentArray.length >= solutionCriterias) {
+                currentArray.forEach((item, i) => {
+                    currentData.set(item, solutionCriteriasText[i]);
+                });
+                currentArray.push(item.textContent, currentData);
+                solutionValuesCriteria.push(currentArray);
+                console.log(solutionValuesCriteria);
+                return;
+            } else {
+                currentArray.push(criterias[i].value);
+            }
+            counter++;
+        };
+    })
 })
 
 buttonBeyond.addEventListener('click', () => {
     console.log(initialQuestion);
     console.log(solutionVariants);
-    solutionCriteria.set('Скорость', 1);
+    /*solutionCriteria.set('Скорость', 1);
     solutionCriteria.set('Комфорт', 3);
     solutionCriteria.set('Надёжность', 3);
-    solutionCriteria.set('Цена', 2);
+    solutionCriteria.set('Цена', 2);*/
     matrixCriteria = matrixOfCriteria(solutionCriteria, solutionCriteria.size);
     console.log(matrixCriteria);
     solutionContainer[2].classList.remove('action__solution-hidden');
